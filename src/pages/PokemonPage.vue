@@ -1,11 +1,13 @@
 <template>
   <div v-if="pokemon">
-    <h1>Quien es este pokemon?</h1>
-    <PokemonImage :pokemonId="pokemon?.id" :showPokemon="showPokemon" />
-    <PokemonOptions
-      :pokemons="pokemonArr"
-      @selectionPokemon="selectionPokemon"
-    />
+    <div class="poke-container">
+      <img :src="imagenPokemon" alt="image de Pokémon" />
+      <PokemonImage :pokemonId="pokemon?.id" :showPokemon="showPokemon" />
+      <PokemonOptions
+        :pokemons="pokemonArr"
+        @selectionPokemon="selectionPokemon"
+      />
+    </div>
     <div v-show="showAnswer">
       <h2>{{ message }}</h2>
       <button @click="newGame">New Game</button>
@@ -14,18 +16,19 @@
 </template>
 
 <script>
-import PokemonImage from "../components/PokemonImage.vue";
-import PokemonOptions from "../components/PokemonOptions.vue";
-import getPokemonsOptions from "@/helpers/getPokemonOptions";
+import PokemonImage from '../components/PokemonImage.vue';
+import PokemonOptions from '../components/PokemonOptions.vue';
+import getPokemonsOptions from '@/helpers/getPokemonOptions';
 
 export default {
   data() {
     return {
+      imagenPokemon: './img/pokemon.png',
       pokemonArr: [],
       pokemon: null,
       showPokemon: false,
       showAnswer: false,
-      message: "",
+      message: '',
     };
   },
 
@@ -46,7 +49,7 @@ export default {
       this.showAnswer = true;
 
       if (pokemonID === this.pokemon.id) {
-        return (this.message = "YOU WIN");
+        return (this.message = 'YOU WIN');
       }
 
       return (this.message = `YOU LOSE, IS ${this.pokemon.name.toUpperCase()}`);
@@ -56,7 +59,7 @@ export default {
         (this.pokemon = null),
         (this.showPokemon = false),
         (this.showAnswer = false),
-        (this.message = "");
+        (this.message = '');
       this.getPokemonsForOptions();
     },
   },
@@ -67,16 +70,26 @@ export default {
 </script>
 
 <style scoped>
+
+.poke-container{
+	transform: translateX(-1rem);
+}
 button {
-  background-color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: #f44336; /* Color de fondo rojo */
+  color: #fff; /* Color del texto blanco */
+  border: none;
   border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  margin-left: 40px;
-  width: 250px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: #ff5f52;
+}
+
+img {
+  width: 20%;
 }
 </style>
